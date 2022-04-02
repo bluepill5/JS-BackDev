@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-class Contenedor {
+class Product {
     constructor (path) {
         this.path = path;
     }
@@ -113,6 +113,6 @@ class Contenedor {
     }
 }
 
-module.exports = Contenedor;
+module.exports = Product;
 
 

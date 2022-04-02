@@ -1,0 +1,12 @@
+th {
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+.td-flex {
+    display: flex;
+    justify-content: space-around;
+}

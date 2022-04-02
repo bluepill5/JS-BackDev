@@ -1,0 +1,36 @@
+:root {
+
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.home {
+    text-align: center;
+    padding-block-start: 1rem;
+}
+
+.header {
+    padding-inline-start: 1rem;
+    padding-block-start: .5rem;
+}
+
+input {
+    padding-inline: .5rem;
+    padding-block:  .25rem;
+}
+
+form {
+    /* border: 1px solid red; */
+    padding: 1rem;
+}
+
+table {
+    /* border: 1px solid salmon; */
+    margin-block-start: 1rem;
+}
+
+

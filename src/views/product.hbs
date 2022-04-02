@@ -1,0 +1,50 @@
+{{>nav}}
+
+<header class="header">
+  <h1>
+    Detalle producto
+  </h1>
+</header>
+
+{{#with prod}}
+    <div class="col-3">
+        <img src="{{ thumbnail }}" alt="Imagen del producto", width="200" height="200">       
+    <div>
+
+    <div class="col">
+        <div class="h1">
+            {{ title }}
+        </div>
+        <div class="h5 font-weight-bold">
+            Precio: <span class="text-danger">${{ price }}</span>
+        </div>
+        <div>
+            <p>{{ description }}</p>
+        </div>
+        <div>
+            {{>add}}
+        </div>
+    </div>
+{{/with}}
+
+<script>
+
+    const add = document.getElementById('add');
+    const remove = document.getElementById('remove');
+    const quantity = document.getElementById('quantity');
+
+    add.addEventListener('click', () => {
+        quantity.value = parseInt(quantity.value) + 1;
+    });
+
+    remove.addEventListener('click', () => {
+        value = parseInt(quantity.value);
+
+        if (value != 1) {
+            value = value - 1;
+        }
+        quantity.value = value;
+        
+    });
+
+</script>

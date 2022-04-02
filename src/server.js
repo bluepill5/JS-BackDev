@@ -3,37 +3,37 @@ const fs = require('fs');
 const express = require('express');
 const http = require('http');
 const { engine } = require('express-handlebars');
-const Contenedor = require('./Contenedor');
+const Product = require('./controllers/Product');
 
 
 /* -------------------------------- Productos ------------------------------- */
 let path_file = './productos.json';
 async function get_products(path_file) {
-    const container = new Contenedor(path_file);
+    const container = new Product(path_file);
     let prods = await container.getAll();
     return prods;
 }
 
 async function get_product(path_file, id) {
-    const container = new Contenedor(path_file);
+    const container = new Product(path_file);
     let prod = await container.getById(id);
     return prod;
 }
 
 async function post_product(path_file, newProduct) {
-    const container = new Contenedor(path_file);
+    const container = new Product(path_file);
     let new_prod_id = await container.save(newProduct);
     return new_prod_id;
 }
 
 async function update_product(path_file, id, prodUpdate) {
-    const container = new Contenedor(path_file);
+    const container = new Product(path_file);
     let prod = await container.updateById(id, prodUpdate);
     return prod;
 }
 
 async function delete_product(path_file, id) {
-    const container = new Contenedor(path_file);
+    const container = new Product(path_file);
     let prod = await container.deleteById(id);
     return prod;
 }
@@ -107,11 +107,19 @@ io.on("connection", (socket) => {
 
 /* --------------------------------- Routers -------------------------------- */
 const router_products = express.Router();
+const router_cart = express.Router();
 
 /* -------------------------------- Endpoints ------------------------------- */
-// Home
+/* ---------------------------------- Home ---------------------------------- */
 app.get('/', (req, res) => {
-    res.render('index', {});
+    let products = get_products(path_file);
+    products.then((prods) => {
+        res.render('index', {
+            prods,
+            exist_product: prods.length > 0
+        });
+    });
+    //res.render('index', {});
 });
 
 app.get('/formulario', (req, res) => {
@@ -124,6 +132,8 @@ app.get('/formulario', (req, res) => {
     });
 });
 
+/* -------------------------------- Productos ------------------------------- */
+
 router_products.get('/', (req, res) => {
     let products = get_products(path_file);
     products.then((prods) => {
@@ -134,6 +144,20 @@ router_products.get('/', (req, res) => {
     });
 });
 
+router_products.get('/:id', (req, res) => {
+    let id = req.params.id;
+
+    let product = get_product(path_file, id);
+
+    product.then((data) => {
+        console.log(data);
+        res.render('product', {
+            prod: data,
+        });
+    });
+
+});
+
 router_products.post('/', (req, res) => {
     const { body } = req;
     let new_prod_id = post_product(path_file, body);
@@ -141,6 +165,12 @@ router_products.post('/', (req, res) => {
         res.send('<script>alert("Información guardada");window.location.href="/formulario";</script>');
     });
 });
+
+/* --------------------------------- Carrito -------------------------------- */
+router_cart.get('/', (req, res) => {
+    res.render('cart', {})
+});
+
 
 /* ---------------------------------- Chat ---------------------------------- */
 app.get('/chat', (req, res) => {
@@ -150,8 +180,9 @@ app.get('/chat', (req, res) => {
 /* -------------------------- Inicializar Servidor -------------------------- */
 // Routers
 app.use('/productos', router_products);
+app.use('/carrito', router_cart);
 
-const PORT = 8080;
+const PORT = 8081;
 server.listen(PORT, () => {
-console.log(`🔥 Servidor escuchando con Express en puerto http://localhost:8080`);
+console.log(`🔥 Servidor escuchando con Express en puerto http://localhost:8081`);
 });
