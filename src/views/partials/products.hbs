@@ -1,0 +1,46 @@
+<div class="container">
+  <table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Imagen</th>
+      </tr>
+    </thead>
+    <tbody id="tbl-prods">
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const socket = io(); 
+  socket.on('messageBackProds', (data) => { 
+    let innerTextProd = ''; 
+    data.map((message) => { 
+      innerTextProd += ` 
+        <tr>
+          <td>${message.title}</td> 
+          <td>${message.price}</td>
+          <td><img src=${message.thumbnail} alt="Producto" width="16"></td> 
+        </tr> 
+      ` 
+    });
+    document.getElementById('tbl-prods').innerHTML = innerTextProd; 
+  });
+  
+  function addProduct() { 
+    const title = document.getElementById('title').value; 
+    const price = document.getElementById('price').value; 
+    const thumbnail = document.getElementById('thumbnail').value; 
+    console.log("Adding");
+    socket.emit('messageFrontProds', { 
+      title, 
+      price, 
+      thumbnail, 
+    });
+
+    document.getElementById('title').value = '';
+    document.getElementById('price').value = '';
+    document.getElementById('thumbnail').value = '';
+  }
+</script>

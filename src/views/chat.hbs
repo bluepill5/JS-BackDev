@@ -1,0 +1,62 @@
+{{>nav}}
+
+<header class="header-chat">
+  <h2>
+    Centro de Mensajes
+  </h2>
+</header>
+
+<fieldset>
+  <form onSubmit="addMessage();return false">
+    Email
+    <input type="email" name="email" id="email" required>
+    Mensaje
+    <input type="text" name="message" id="message">
+    <input type="hidden" name="datemessage" id="datemessage"/>
+
+    <button id="send" type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+</fieldset>
+
+<fieldset>
+  <header class="header-chat">
+    <h3>Mensajes</h3>
+  </header>
+  <ul id="messages"></ul>
+</fieldset>
+
+<script>
+  const socket = io();
+
+  socket.on('messageBack', (data) => {
+    let innerText = '';
+    data.map((message) => {
+      innerText += `
+                <li>
+                    <div><strong style="color: #6061AF">${message.email}</strong> [<span style="color: #CF2458">${message.datemessage}<span>]: <em style="color: #26b72b">${message.text}</em></div>
+                </li>
+      `
+    });
+    document.getElementById('messages').innerHTML = innerText;
+  });
+
+  function addMessage() {
+    let today = new Date();
+    let datemessage = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    const email = document.getElementById('email').value;
+    const text = document.getElementById('message').value;
+
+    socket.emit('messageFront', {
+      email,
+      datemessage,
+      text,
+    });
+
+    document.getElementById('message').value = '';
+  }
+
+
+</script>
+
+</div>

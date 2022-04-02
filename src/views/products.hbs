@@ -1,0 +1,40 @@
+{{>nav}}
+
+<header class="header">
+  <h1>
+    Productos
+  </h1>
+</header>
+
+{{#if exist_product}}
+<div class="container">
+        <table id="tbl-id" class="table table-striped table-bordered" style="width:100%">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each prods}}
+                <tr>
+                    <td>{{this.title}}</td>
+                    <td>{{this.price}}</td>
+                    <td><img src={{ this.thumbnail }} alt="Producto" width="16"></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <div class="container-button">
+            <form action="/formulario/" method="GET">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+        </div>
+</div>
+{{else}}
+<div class="container">
+    <h2>No hay productos</h2>
+</div>
+{{/if}}
+
