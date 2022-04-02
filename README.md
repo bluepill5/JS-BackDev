@@ -1,26 +1,43 @@
-# Javascript - Websockets
+# eCommerce Backend
 
-## Descripción del proyecto
+## Descripción:
 
-1) Modificar el último entregable para que disponga de un canal de websocket que permita representar, por debajo del formulario de ingreso, una tabla con la lista de productos en tiempo real:
-    - Puede haber varios clientes conectados simultáneamente y en cada uno de ellos se reflejarán los cambios que se realicen en los productos sin necesidad de recargar la vista.
-    - Cuando un cliente se conecte, recibirá la lista de productos a representar en la vista.
+La idea del repositorio es practicar conceptos de backend con JavaScript mediante la idea de un ecommerce.
 
-2) Añadiremos al proyecto un canal de chat entre los clientes y el servidor.
-    - En la parte inferior del formulario de ingreso se presentará el centro de mensajes almacenados en el servidor, donde figuren los mensajes de todos los usuarios identificados por su email.
-    - El formato a representar será: email (texto negrita en azul) [fecha y hora (DD/MM/YYYY HH:MM:SS)](texto normal en marrón) : mensaje (texto italic en verde)
-    - Además incorporar dos elementos de entrada: uno para que el usuario ingrese su email (obligatorio para poder utilizar el chat) y otro para ingresar mensajes y enviarlos mediante un botón.
-    - Los mensajes deben persistir en el servidor en un archivo (ver segundo entregable).
+## Tecnologías usadas
 
-## Plantilla:
+  - JavaScript
+  - Node
+  - Express
 
-- [Handlebars](https://github.com/bluepill5/JavaScript-Dev/tree/master/work_05/src)
+## Aspectos a considerar
 
-## Ejecución:
+  1. El router base '/api/productos' implementará cuatro funcionalidades:
+    - GET: '/:id?' - Me permite listar todos los productos disponibles ó un producto por su id (disponible para usuarios y administradores)
+    - POST: '/' - Para incorporar productos al listado (disponible para administradores)
+    - PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
+    - DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
 
-- *npm run wss*
+  2. El router base '/api/carrito' implementará tres rutas disponibles para usuarios y administradores:
+    - POST: '/' - Crea un carrito y devuelve su id.
+    - DELETE: '/:id' - Vacía un carrito y lo elimina.
+    - GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
+    - POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
+    - DELETE: '/:id/productos/:id_prod' - Eliminar un producto del carrito por su id de carrito y de producto
 
-![Websockets](https://user-images.githubusercontent.com/4382527/160265975-e30bac83-6d1b-4b2b-b206-59dc9db1f560.gif)
+  3. Crear una variable booleana administrador, cuyo valor configuraremos más adelante con el sistema de login. Según su valor (true ó false) me permitirá alcanzar o no las rutas indicadas. En el caso de recibir un request a una ruta no permitida por el perfil, devolver un objeto de error. Ejemplo: { error : -1, descripcion: ruta 'x' método 'y' no autorizada}
+
+  4. Un producto dispondrá de los siguientes campos:  id, timestamp, nombre, descripcion, código, foto (url), precio, stock.
+
+  5. El carrito de compras tendrá la siguiente estructura: 
+id, timestamp(carrito), producto: { id, timestamp(producto), nombre, descripcion, código, foto (url), precio, stock }
+
+  6. El timestamp puede implementarse con Date.now()
+
+  7. Comenzar a trabajar con el listado de productos y el carrito de compras en memoria del servidor, luego persistirlos en el filesystem.
+
+
+
 
 
 
