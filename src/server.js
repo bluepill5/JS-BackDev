@@ -7,10 +7,11 @@ const { engine } = require('express-handlebars');
 const Product = require('./controllers/Product');
 const Cart = require('./controllers/Cart');
 
+const {get_products, get_product, post_product, update_product, delete_product} = require('./controllers/ProductFunctions');
+
 const router_cart = require('./routes/cart.routes');
 const router_products = require('./routes/product.routes');
 let path_file = './productos.json';
-
 
 /* -------------------------------------------------------------------------- */
 /*                              Servidor Express                              */
