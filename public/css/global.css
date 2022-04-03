@@ -2,6 +2,10 @@
 
 }
 
+body {
+    font-family: system-ui;
+}
+
 .sticky {
     position: sticky;
     top: 0;

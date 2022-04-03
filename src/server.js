@@ -1,9 +1,11 @@
 /* -------------------------------- Librerias ------------------------------- */
 const fs = require('fs');
 const express = require('express');
+const session = require('express-session');
 const http = require('http');
 const { engine } = require('express-handlebars');
 const Product = require('./controllers/Product');
+const Cart = require('./controllers/Cart');
 
 
 /* -------------------------------- Productos ------------------------------- */
@@ -59,6 +61,19 @@ app.engine(
       partialsDir: __dirname + "/views/partials",
     })
 );
+
+/* --------------------------------- Session -------------------------------- */
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+ });
+
 
 /* ------------------------------- Websockets ------------------------------- */
 const server = http.createServer(app);
@@ -150,7 +165,6 @@ router_products.get('/:id', (req, res) => {
     let product = get_product(path_file, id);
 
     product.then((data) => {
-        console.log(data);
         res.render('product', {
             prod: data,
         });
@@ -167,8 +181,41 @@ router_products.post('/', (req, res) => {
 });
 
 /* --------------------------------- Carrito -------------------------------- */
+router_cart.get('/agregar/:id', (req, res) => {
+    let id = req.params.id;
+    let product = get_product(path_file, id);
+
+    const cart = new Cart(req.session.cart ? req.session.cart : {});
+    product.then((prod) => {
+        cart.add(prod, id);
+    
+        req.session.cart = cart;
+        console.log(cart);
+    
+        res.redirect('/');
+    });
+
+});
+
+router_cart.get('/remover/:id', (req, res) => {
+    const { id } = req.params;
+    const cart = new Cart(req.session.cart ? req.session.cart : {});
+    cart.removeItem(id);
+    req.session.cart = cart;
+    res.redirect('/carrito');
+});
+
+
 router_cart.get('/', (req, res) => {
-    res.render('cart', {})
+    if (!req.session.cart) {
+        return res.render('cart', {products: null});
+    }
+    const cart = new Cart(req.session.cart);
+    return res.render('cart', {
+        products: cart.generateArray(),
+        totalPrice: cart.totalPrice,
+        totalQty: cart.totalQty
+    });
 });
 
 
@@ -182,7 +229,7 @@ app.get('/chat', (req, res) => {
 app.use('/productos', router_products);
 app.use('/carrito', router_cart);
 
-const PORT = 8081;
+const PORT = 8083;
 server.listen(PORT, () => {
-console.log(`🔥 Servidor escuchando con Express en puerto http://localhost:8081`);
+console.log(`🔥 Servidor escuchando con Express en puerto http://localhost:8083`);
 });
