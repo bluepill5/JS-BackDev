@@ -18,9 +18,13 @@ class Cart {
     }
 
     removeItem = (id) => {
-        this.totalQty -= this.items[id].qty;
-        this.totalPrice -= this.items[id].price;
-        delete this.items[id];
+        if (JSON.stringify(this.items) === '{}') {
+            return 'Product not found.';
+        } else {
+            this.totalQty -= this.items[id].qty;
+            this.totalPrice -= this.items[id].price;
+            delete this.items[id];
+        }
     }
 
     generateArray = () => {

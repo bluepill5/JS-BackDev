@@ -15,6 +15,7 @@ class Product {
           0
         );
         newProduct.id = max_id + 1;
+        newProduct.timestamp = Date.now();
         products.push(newProduct);
 
         // Guardamos el archivo
@@ -35,7 +36,7 @@ class Product {
             if (product == 'Product not found.') {
                 return product;
             } else {
-                const properties = ['title', 'price', 'thumbnail'];
+                const properties = ['title', 'description', 'price', 'stock', 'thumbnail'];
                 Object.entries(prodUpdate).map(item => {
                     if(properties.includes(item[0])) {
                         product[item[0]] = item[1];

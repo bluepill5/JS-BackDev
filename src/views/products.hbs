@@ -24,8 +24,10 @@
                     <td>{{this.price}}</td>
                     <td><img src={{ this.thumbnail }} alt="Producto" width="77"></td>
                     <td class="td-flex">
-                        <a href="" class="btn btn-primary">Editar</a>
-                        <a href="" class="btn btn-danger">Eliminar</a>
+                        {{!-- <a href="" class="btn btn-primary">Editar</a> --}}
+                        {{!-- <a href="" class="btn btn-danger">Eliminar</a> --}}
+                        {{>editProd}}
+                        {{>removeProd}}
                     </td>
                 </tr>
                 {{/each}}

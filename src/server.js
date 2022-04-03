@@ -7,41 +7,13 @@ const { engine } = require('express-handlebars');
 const Product = require('./controllers/Product');
 const Cart = require('./controllers/Cart');
 
-
-/* -------------------------------- Productos ------------------------------- */
+const router_cart = require('./routes/cart.routes');
+const router_products = require('./routes/product.routes');
 let path_file = './productos.json';
-async function get_products(path_file) {
-    const container = new Product(path_file);
-    let prods = await container.getAll();
-    return prods;
-}
 
-async function get_product(path_file, id) {
-    const container = new Product(path_file);
-    let prod = await container.getById(id);
-    return prod;
-}
-
-async function post_product(path_file, newProduct) {
-    const container = new Product(path_file);
-    let new_prod_id = await container.save(newProduct);
-    return new_prod_id;
-}
-
-async function update_product(path_file, id, prodUpdate) {
-    const container = new Product(path_file);
-    let prod = await container.updateById(id, prodUpdate);
-    return prod;
-}
-
-async function delete_product(path_file, id) {
-    const container = new Product(path_file);
-    let prod = await container.deleteById(id);
-    return prod;
-}
 
 /* -------------------------------------------------------------------------- */
-/*                    Servidor Express & Websockets                           */
+/*                              Servidor Express                              */
 /* -------------------------------------------------------------------------- */
 const app = express();
 app.use(express.json());
@@ -103,7 +75,6 @@ io.on("connection", (socket) => {
   // Chat
   socket.on("messageFront", (data) => {
     messages.push(data);
-    // io.sockets.emit("message", data);
     io.sockets.emit("messageBack", messages);
   });
 
@@ -111,20 +82,13 @@ io.on("connection", (socket) => {
   socket.on("messageFrontProds", (data) => {
     post_product(path_file, data);
     products_stream.push(data);
-    // let products = get_products(path_file);
-    // products.then((prods) => {
-    //     io.sockets.emit("messageBackProds", prods);
-    // });
     io.sockets.emit("messageBackProds", products_stream);
   });
 });
 
-
-/* --------------------------------- Routers -------------------------------- */
-const router_products = express.Router();
-const router_cart = express.Router();
-
-/* -------------------------------- Endpoints ------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                  Endpoints                                 */
+/* -------------------------------------------------------------------------- */
 /* ---------------------------------- Home ---------------------------------- */
 app.get('/', (req, res) => {
     let products = get_products(path_file);
@@ -134,7 +98,6 @@ app.get('/', (req, res) => {
             exist_product: prods.length > 0
         });
     });
-    //res.render('index', {});
 });
 
 app.get('/formulario', (req, res) => {
@@ -147,87 +110,9 @@ app.get('/formulario', (req, res) => {
     });
 });
 
-/* -------------------------------- Productos ------------------------------- */
-
-router_products.get('/', (req, res) => {
-    let products = get_products(path_file);
-    products.then((prods) => {
-        res.render('products', {
-            prods,
-            exist_product: prods.length > 0
-        });
-    });
-});
-
-router_products.get('/:id', (req, res) => {
-    let id = req.params.id;
-
-    let product = get_product(path_file, id);
-
-    product.then((data) => {
-        res.render('product', {
-            prod: data,
-        });
-    });
-
-});
-
-router_products.post('/', (req, res) => {
-    const { body } = req;
-    let new_prod_id = post_product(path_file, body);
-    new_prod_id.then((id) => {
-        res.send('<script>alert("Información guardada");window.location.href="/formulario";</script>');
-    });
-});
-
-/* --------------------------------- Carrito -------------------------------- */
-router_cart.post('/agregar/:id', (req, res) => {
-    const id = parseInt(req.body.product_id);
-    const quantity = parseInt(req.body.quantity);
-    const product = get_product(path_file, id);
-
-    const cart = new Cart(req.session.cart ? req.session.cart : {});
-    product.then((prod) => {
-        cart.add(prod, id, quantity);
-    
-        req.session.cart = cart;
-        // console.log(cart);
-    
-        res.redirect('/');
-    });
-
-});
-
-router_cart.get('/remover/:id', (req, res) => {
-    const { id } = req.params;
-    const cart = new Cart(req.session.cart ? req.session.cart : {});
-    cart.removeItem(id);
-    req.session.cart = cart;
-    // console.log(cart);
-    res.redirect('/carrito');
-});
-
-
-router_cart.get('/', (req, res) => {
-    if (!req.session.cart) {
-        return res.render('cart', {products: null, exist_prods: false});
-    }
-    const cart = new Cart(req.session.cart);
-
-    if (cart.generateArray().length == 0) {
-        return res.render('cart', {products: false, exist_prods: false});
-    }
-    
-    return res.render('cart', {
-        products: cart.generateArray(),
-        totalPrice: cart.totalPrice,
-        totalQty: cart.totalQty,
-        exist_prods: true
-    });
-});
-
-
-/* ---------------------------------- Chat ---------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                    Chat                                    */
+/* -------------------------------------------------------------------------- */
 app.get('/chat', (req, res) => {
     res.render('chat', {});
 });
@@ -237,7 +122,7 @@ app.get('/chat', (req, res) => {
 app.use('/productos', router_products);
 app.use('/carrito', router_cart);
 
-const PORT = 8083;
+const PORT = 8080;
 server.listen(PORT, () => {
-console.log(`🔥 Servidor escuchando con Express en puerto http://localhost:8083`);
+console.log(`🔥 Servidor escuchando con Express en puerto http://localhost:8080`);
 });
