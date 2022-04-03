@@ -39,3 +39,8 @@ La idea del repositorio es practicar conceptos de backend con JavaScript mediant
 6. El timestamp puede implementarse con Date.now()
 
 7. Comenzar a trabajar con el listado de productos y el carrito de compras en memoria del servidor, luego persistirlos en el filesystem.
+
+## DEMO:
+
+![ProjectMid](https://user-images.githubusercontent.com/4382527/161443764-27dd7d43-a2cb-4849-a8cc-581b1a09d9e2.gif)
+
