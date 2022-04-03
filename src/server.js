@@ -181,16 +181,17 @@ router_products.post('/', (req, res) => {
 });
 
 /* --------------------------------- Carrito -------------------------------- */
-router_cart.get('/agregar/:id', (req, res) => {
-    let id = req.params.id;
-    let product = get_product(path_file, id);
+router_cart.post('/agregar/:id', (req, res) => {
+    const id = parseInt(req.body.product_id);
+    const quantity = parseInt(req.body.quantity);
+    const product = get_product(path_file, id);
 
     const cart = new Cart(req.session.cart ? req.session.cart : {});
     product.then((prod) => {
-        cart.add(prod, id);
+        cart.add(prod, id, quantity);
     
         req.session.cart = cart;
-        console.log(cart);
+        // console.log(cart);
     
         res.redirect('/');
     });
@@ -202,19 +203,26 @@ router_cart.get('/remover/:id', (req, res) => {
     const cart = new Cart(req.session.cart ? req.session.cart : {});
     cart.removeItem(id);
     req.session.cart = cart;
+    // console.log(cart);
     res.redirect('/carrito');
 });
 
 
 router_cart.get('/', (req, res) => {
     if (!req.session.cart) {
-        return res.render('cart', {products: null});
+        return res.render('cart', {products: null, exist_prods: false});
     }
     const cart = new Cart(req.session.cart);
+
+    if (cart.generateArray().length == 0) {
+        return res.render('cart', {products: false, exist_prods: false});
+    }
+    
     return res.render('cart', {
         products: cart.generateArray(),
         totalPrice: cart.totalPrice,
-        totalQty: cart.totalQty
+        totalQty: cart.totalQty,
+        exist_prods: true
     });
 });
 

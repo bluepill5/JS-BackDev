@@ -5,15 +5,16 @@ class Cart {
         this.totalPrice = oldCart.totalPrice || 0;
     }
 
-    add = (item, id) => {
+    add = (item, id, qty) => {
         let storedItem = this.items[id];
         if (!storedItem) {
             storedItem = this.items[id] = {item: item, qty: 0, price: 0};
         }
-        storedItem.qty++;
+
+        storedItem.qty = storedItem.qty + qty;
         storedItem.price = storedItem.item.price * storedItem.qty;
-        this.totalQty++;
-        this.totalPrice += parseFloat(storedItem.item.price);
+        this.totalQty += qty;
+        this.totalPrice += parseFloat(storedItem.item.price * qty);
     }
 
     removeItem = (id) => {
