@@ -1,7 +1,7 @@
 const http = require('http');
 const { Server } = require('socket.io');
 
-let path_file = './productos.json';
+let path_file = './src/database/productos.json';
 
 const io = new Server(server);
 

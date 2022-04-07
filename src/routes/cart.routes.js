@@ -5,7 +5,7 @@ const router_cart = express.Router();
 const Cart = require('../controllers/Cart');
 
 const {get_products, get_product, post_product, update_product, delete_product} = require('../controllers/ProductFunctions');
-let path_file = './productos.json';
+let path_file = './src/database/productos.json';
 
 
 /* -------------------------------------------------------------------------- */

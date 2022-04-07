@@ -11,7 +11,7 @@ const {get_products, get_product, post_product, update_product, delete_product} 
 
 const router_cart = require('./routes/cart.routes');
 const router_products = require('./routes/product.routes');
-let path_file = './productos.json';
+let path_file = './src/database/productos.json';
 
 /* -------------------------------------------------------------------------- */
 /*                              Servidor Express                              */

@@ -4,7 +4,7 @@ const router_products = express.Router();
 const { isAuthenticated } = require('../controllers/authentification');
 
 const {get_products, get_product, post_product, update_product, delete_product} = require('../controllers/ProductFunctions');
-let path_file = './productos.json';
+let path_file = './src/database/productos.json';
 
 /* -------------------------------------------------------------------------- */
 /*                                  Producto                                  */
@@ -13,7 +13,7 @@ let path_file = './productos.json';
 router_products.get('/', (req, res) => {
     let products = get_products(path_file);
     products.then((prods) => {
-        res.render('products', {
+        res.status(200).render('products', {
             prods,
             exist_product: prods.length > 0
         });
@@ -26,7 +26,7 @@ router_products.get('/:id', (req, res) => {
     let product = get_product(path_file, id);
 
     product.then((data) => {
-        res.render('product', {
+        res.status(200).render('product', {
             prod: data,
         });
     });
@@ -37,7 +37,7 @@ router_products.get('/remover/:id', (req, res) => {
     let product = delete_product(path_file, id);
     product.then((data) => {
         console.log(data);
-        // res.render('/', data);
+        res.status(204).send();
     });
 });
 
@@ -54,7 +54,7 @@ router_products.post('/', (req, res) => {
 
     let new_prod_id = post_product(path_file, body);
     new_prod_id.then((id) => {
-        return res.send('<script>alert("Información guardada");window.location.href="/formulario";</script>');
+        return res.status(201).send('<script>alert("Información guardada");window.location.href="/formulario";</script>');
     });
 });
 
@@ -90,7 +90,7 @@ router_products.delete('/:id', (req, res) => {
     
     let del_prod = delete_product(path_file, id) ;
     del_prod.then((data) => {
-        res.status(200).json(data);
+        res.status(204).json(data);
     });
 });
 
