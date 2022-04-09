@@ -1,4 +1,5 @@
 /* -------------------------------- Librerias ------------------------------- */
+require('dotenv').config();
 const fs = require('fs');
 const express = require('express');
 const session = require('express-session');
@@ -123,7 +124,7 @@ app.get('/chat', (req, res) => {
 app.use('/productos', router_products);
 app.use('/carrito', router_cart);
 
-const PORT = 8080;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
 console.log(`🔥 Servidor escuchando con Express en puerto http://localhost:8080`);
 });
