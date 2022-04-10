@@ -31,16 +31,21 @@
   function addProduct() { 
     const title = document.getElementById('title').value; 
     const price = document.getElementById('price').value; 
+    const description = document.getElementById('description').value;
     const thumbnail = document.getElementById('thumbnail').value; 
     console.log("Adding");
     socket.emit('messageFrontProds', { 
       title, 
       price, 
+      description,
       thumbnail, 
     });
 
     document.getElementById('title').value = '';
     document.getElementById('price').value = '';
+    document.getElementById('description').value = '';
     document.getElementById('thumbnail').value = '';
+
+    location.reload();
   }
 </script>

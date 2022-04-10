@@ -1,6 +1,7 @@
 @import "./global.css";
 @import "./products.css";
 @import "./table.css";
+@import "./form.css";
 
 .container-img {
     display: flex;

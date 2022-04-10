@@ -4,8 +4,6 @@ const router_products = express.Router();
 import isAuthenticated from '../controllers/authentification.js';
 
 import Product from '../controllers/Product.js';
-import { get_products, get_product, post_product, update_product, delete_product } from '../controllers/ProductFunctions.js';
-let path_file = './src/database/productos.json';
 
 /* -------------------------------------------------------------------------- */
 /*                                  Producto                                  */
@@ -13,7 +11,6 @@ let path_file = './src/database/productos.json';
 let products = new Product();
 /* ----------------------------------- GET ---------------------------------- */
 router_products.get('/', (req, res) => {
-    // let products = get_products(path_file);
     products.getAll().then((prods) => {
         res.status(200).render('products', {
             prods,
@@ -25,11 +22,7 @@ router_products.get('/', (req, res) => {
 router_products.get('/:id', (req, res) => {
     let id = req.params.id;
 
-    // let product = get_product(id);
-
     products.getById(id).then((data) => {
-        console.log(`Id de producto: ${id}`);
-        console.log(data);
         res.status(200).render('product', {
             prod: data,
         });
@@ -38,10 +31,8 @@ router_products.get('/:id', (req, res) => {
 
 router_products.get('/remover/:id', (req, res) => {
     let { id }  = req.params;
-    // let product = delete_product(path_file, id);
     products.deleteById(id).then((data) => {
-        console.log(data);
-        res.status(204).send();
+        res.status(204).redirect('/productos');
     });
 });
 
@@ -56,7 +47,6 @@ router_products.post('/', (req, res) => {
         });
     }
 
-    // let new_prod_id = post_product(path_file, body);
     products.save(body).then(() => {
         return res.status(201).send('<script>alert("Información guardada");window.location.href="/formulario";</script>');
     });
@@ -75,7 +65,6 @@ router_products.put('/:id', (req, res) => {
         });
     }
 
-    // let prod = update_product(path_file, id, body);
     products.updateById(id, body).then((data) => {
         return res.status(200).json(data);
     });
@@ -92,7 +81,6 @@ router_products.delete('/:id', (req, res) => {
         });
     }
     
-    // let del_prod = delete_product(path_file, id) ;
     products.deleteById(id).then((data) => {
         res.status(204).json(data);
     });

@@ -4,9 +4,6 @@ const router_cart = express.Router();
 import Cart from '../controllers/Cart.js';
 import Product from '../controllers/Product.js';
 
-import { get_products, get_product, post_product, update_product, delete_product } from '../controllers/ProductFunctions.js';
-let path_file = './src/database/productos.json';
-
 
 /* -------------------------------------------------------------------------- */
 /*                                   Carrito                                  */
@@ -16,15 +13,12 @@ let products = new Product();
 router_cart.post('/agregar/:id', (req, res) => {
     const id = parseInt(req.body.product_id);
     const quantity = parseInt(req.body.quantity);
-    // const product = get_product(path_file, id);
 
     const cart = new Cart(req.session.cart ? req.session.cart : {});
-    products.getById(id).then((prod) => {
+    products.getById(id) .then((prod) => {
         cart.add(prod, id, quantity);
 
         req.session.cart = cart;
-        // console.log(cart);
-
         res.redirect('/');
     });
 
