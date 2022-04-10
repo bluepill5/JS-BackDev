@@ -1,10 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router_cart = express.Router();
 
-// const Product = require('../controllers/Product');
-const Cart = require('../controllers/Cart');
+import Cart from '../controllers/Cart.js';
 
-const {get_products, get_product, post_product, update_product, delete_product} = require('../controllers/ProductFunctions');
+import { get_products, get_product, post_product, update_product, delete_product } from '../controllers/ProductFunctions.js';
 let path_file = './src/database/productos.json';
 
 
@@ -20,10 +19,10 @@ router_cart.post('/agregar/:id', (req, res) => {
     const cart = new Cart(req.session.cart ? req.session.cart : {});
     product.then((prod) => {
         cart.add(prod, id, quantity);
-    
+
         req.session.cart = cart;
         // console.log(cart);
-    
+
         res.redirect('/');
     });
 
@@ -74,4 +73,5 @@ router_cart.delete('/carrito', (req, res) => {
     return res.status(200).json(req.session.cart);
 });
 
-module.exports = router_cart;
+// module.exports = router_cart;
+export default router_cart;

@@ -1,4 +1,4 @@
-const fs = require('fs');
+import { promises } from 'fs';
 
 class Product {
     constructor (path) {
@@ -20,7 +20,7 @@ class Product {
 
         // Guardamos el archivo
         try {
-            await fs.promises.writeFile(this.path, JSON.stringify(products));
+            await promises.writeFile(this.path, JSON.stringify(products));
             return newProduct.id;
         } catch (error) {
             console.log(`Error al guardar el archivo: {error}`);
@@ -44,7 +44,7 @@ class Product {
                 });
                 products = products.filter(product => product.id != id);
                 products.push(product);
-                fs.promises.writeFile(this.path, JSON.stringify(products));
+                promises.writeFile(this.path, JSON.stringify(products));
                 return product;
             }
         } catch(error) {
@@ -70,7 +70,7 @@ class Product {
         // el archivo
         try {
             let res = [];
-            await fs.promises.readFile(this.path, 'utf-8')
+            await promises.readFile(this.path, 'utf-8')
                 .then(content => JSON.parse(content)
                 .map(product => res.push(product)));
 
@@ -85,13 +85,13 @@ class Product {
     deleteById = async (id) => {
         // Elimina del archivo el objeto con el id buscado
         try {
-            let products = await fs.promises.readFile(this.path, 'utf-8')
+            let products = await promises.readFile(this.path, 'utf-8')
                 .then(content => JSON.parse(content));
             let product = products.find(product => product.id == id);
             
             if (product) {
                 products = products.filter(product => product.id != id);
-                fs.promises.writeFile(this.path, JSON.stringify(products));
+                promises.writeFile(this.path, JSON.stringify(products));
                 return product;
             } else {
                 return 'Product not found.';
@@ -105,7 +105,7 @@ class Product {
     deleteAll = async () => {
         // Elimina todos los objetos presentes en el archivo
         try {
-            await fs.promises.writeFile(this.path, "[]");
+            await promises.writeFile(this.path, "[]");
             return [];
         } catch {
             console.log(`Error al escribir archivo.`)
@@ -114,6 +114,6 @@ class Product {
     }
 }
 
-module.exports = Product;
+export default Product;
 
 

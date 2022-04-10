@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router_products = express.Router();
 
-const { isAuthenticated } = require('../controllers/authentification');
+import isAuthenticated from '../controllers/authentification.js';
 
-const {get_products, get_product, post_product, update_product, delete_product} = require('../controllers/ProductFunctions');
+import { get_products, get_product, post_product, update_product, delete_product } from '../controllers/ProductFunctions.js';
 let path_file = './src/database/productos.json';
 
 /* -------------------------------------------------------------------------- */
@@ -94,5 +94,5 @@ router_products.delete('/:id', (req, res) => {
     });
 });
 
-module.exports = router_products;
-
+// module.exports = router_products;
+export default router_products;

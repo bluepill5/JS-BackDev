@@ -1,18 +1,25 @@
 /* -------------------------------- Librerias ------------------------------- */
-require('dotenv').config();
-const fs = require('fs');
-const express = require('express');
-const session = require('express-session');
-const http = require('http');
-const { engine } = require('express-handlebars');
-const Product = require('./controllers/Product');
-const Cart = require('./controllers/Cart');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const {get_products, get_product, post_product, update_product, delete_product} = require('./controllers/ProductFunctions');
+import * as http from 'http'; 
+import { readFileSync } from 'fs'
+import {fileURLToPath} from 'url';
+import path from 'path';
 
-const router_cart = require('./routes/cart.routes');
-const router_products = require('./routes/product.routes');
+import express from 'express';
+import session from 'express-session';
+
+import { engine } from 'express-handlebars';
+
+import { get_products, get_product, post_product, update_product, delete_product } from './controllers/ProductFunctions.js';
+
+import router_cart from './routes/cart.routes.js';
+import router_products from './routes/product.routes.js';
 let path_file = './src/database/productos.json';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /* -------------------------------------------------------------------------- */
 /*                              Servidor Express                              */
@@ -51,7 +58,7 @@ app.use(function(req, res, next) {
 
 /* ------------------------------- Websockets ------------------------------- */
 const server = http.createServer(app);
-const { Server } = require('socket.io');
+import { Server } from 'socket.io';
 
 const io = new Server(server);
 
@@ -66,7 +73,7 @@ const messages = [
     },
 ];
 
-const products_stream = JSON.parse(fs.readFileSync(path_file));;
+const products_stream = JSON.parse(readFileSync(path_file));;
 
 io.on("connection", (socket) => {
   // Enviamos todos los mensajes al cliente cuando se conecta

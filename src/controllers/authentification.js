@@ -1,4 +1,4 @@
 /* ------------------------------ Authenticated ----------------------------- */
 let isAuthenticated = false;
 
-module.exports = { isAuthenticated };
+export default isAuthenticated;
