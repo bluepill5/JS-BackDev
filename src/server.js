@@ -12,6 +12,7 @@ import session from 'express-session';
 
 import { engine } from 'express-handlebars';
 
+import Product from './controllers/Product.js';
 import { get_products, get_product, post_product, update_product, delete_product } from './controllers/ProductFunctions.js';
 
 import router_cart from './routes/cart.routes.js';
@@ -98,10 +99,13 @@ io.on("connection", (socket) => {
 /* -------------------------------------------------------------------------- */
 /*                                  Endpoints                                 */
 /* -------------------------------------------------------------------------- */
+let products = new Product();
 /* ---------------------------------- Home ---------------------------------- */
 app.get('/', (req, res) => {
-    let products = get_products(path_file);
-    products.then((prods) => {
+    // let prods = await products.getAll();
+    // let products = get_products();
+    products.getAll().then((prods) => {
+        console.log('Ruta productos')
         res.render('index', {
             prods,
             exist_product: prods.length > 0
@@ -110,8 +114,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/formulario', (req, res) => {
-    let products = get_products(path_file);
-    products.then((prods) => {
+    // let products = get_products();
+    products.getAll().then((prods) => {
         res.render('form', {
             prods,
             exist_product: prods.length > 0
