@@ -21,7 +21,7 @@ class Product {
     getById = async (id) => {
         try {
             const product = await knex.select().from('ecommerce').where('id', id);
-            return product;
+            return product[0];
         } catch (error) {
             console.log(error);
         }

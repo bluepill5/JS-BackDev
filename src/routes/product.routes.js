@@ -28,6 +28,8 @@ router_products.get('/:id', (req, res) => {
     // let product = get_product(id);
 
     products.getById(id).then((data) => {
+        console.log(`Id de producto: ${id}`);
+        console.log(data);
         res.status(200).render('product', {
             prod: data,
         });

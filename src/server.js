@@ -105,7 +105,6 @@ app.get('/', (req, res) => {
     // let prods = await products.getAll();
     // let products = get_products();
     products.getAll().then((prods) => {
-        console.log('Ruta productos')
         res.render('index', {
             prods,
             exist_product: prods.length > 0
