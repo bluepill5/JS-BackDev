@@ -1,4 +1,5 @@
 import '../config/db.js';
+import { ObjectId } from 'mongodb';
 import { ProductModel } from '../modules/products_modules.js';
 
 class Product {
@@ -39,7 +40,7 @@ class Product {
     deleteById = async (id) => {
         try {
             let o_id = new ObjectId(id)
-            await ProductModel.delete({_id: o_id});
+            await ProductModel.deleteMany({_id: o_id});
         } catch (error) {
             console.log(error);
         }
@@ -47,7 +48,7 @@ class Product {
 
     deleteAll = async () => {
         try {
-            await ProductModel.delete();
+            await ProductModel.deleteMany();
         } catch (error) {
             console.log(error);
         }
