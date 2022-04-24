@@ -111,7 +111,7 @@ app.get('/formulario', (req, res) => {
     products.getAll().then((prods) => {
         res.render('form', {
             prods,
-            exist_product: prods.length > 0
+            // exist_product: prods.length > 0
         });
     });
 });

@@ -21,7 +21,6 @@ router_products.get('/', (req, res) => {
 
 router_products.get('/:id', (req, res) => {
     let id = req.params.id;
-
     products.getById(id).then((data) => {
         res.status(200).render('product', {
             prod: data,

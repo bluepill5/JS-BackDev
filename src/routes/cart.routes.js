@@ -11,11 +11,11 @@ import Product from '../controllers/Product.js';
 let products = new Product();
 /* ---------------------------------- POST ---------------------------------- */
 router_cart.post('/agregar/:id', (req, res) => {
-    const id = parseInt(req.body.product_id);
+    const id = req.body.product_id;
     const quantity = parseInt(req.body.quantity);
 
     const cart = new Cart(req.session.cart ? req.session.cart : {});
-    products.getById(id) .then((prod) => {
+    products.getById(id).then((prod) => {
         cart.add(prod, id, quantity);
 
         req.session.cart = cart;

@@ -1,18 +1,18 @@
-import '../config/db.js';
-import { ProductModel } from '../modules/products_modules.js';
+import { knex } from '../database/db.js';
 
 class Product {
     // Methods
     save = async (newProduct) => {
         try {
-            await ProductModel.create(newProduct);
+            await knex.insert(newProduct).from('ecommerce');
         } catch (error) {
             console.log(error);
         }
     }
+
     updateById = async (id, prodUpdate) => {
         try {
-            await ProductModel.updateOne({_id: id}, prodUpdate);
+            await knex.update(prodUpdate).from('ecommerce').where('id', id);
         } catch (error) {
             console.log(error);
         }
@@ -20,8 +20,8 @@ class Product {
 
     getById = async (id) => {
         try {
-            const product = await ProductModel.findById(id).lean();
-            return product;
+            const product = await knex.select().from('ecommerce').where('id', id);
+            return product[0];
         } catch (error) {
             console.log(error);
         }
@@ -29,7 +29,7 @@ class Product {
 
     getAll = async () => {
         try {
-            const products = await ProductModel.find().lean();
+            const products = await knex.select().from('ecommerce');
             return products;
         } catch (error) {
             console.log(error);
@@ -38,8 +38,7 @@ class Product {
 
     deleteById = async (id) => {
         try {
-            let o_id = new ObjectId(id)
-            await ProductModel.delete({_id: o_id});
+            await knex.del().from('ecommerce').where('id', id);
         } catch (error) {
             console.log(error);
         }
@@ -47,7 +46,8 @@ class Product {
 
     deleteAll = async () => {
         try {
-            await ProductModel.delete();
+            await knex.del().from('ecommerce');
+            return [];
         } catch (error) {
             console.log(error);
         }

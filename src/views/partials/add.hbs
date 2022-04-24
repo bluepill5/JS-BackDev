@@ -1,5 +1,5 @@
-<form class="" action="/carrito/agregar/{{ this.id }}" method="POST">
-    <input type="hidden" name="product_id" value="{{ this.id }}">
+<form class="" action="/carrito/agregar/{{ this._id }}" method="POST">
+    <input type="hidden" name="product_id" value="{{ this._id }}">
     <div class="">
         <button type="button" class="btn btn-info d-inline" id="remove">-</button>
         <input type="number" value="1" class="form-control col-sm-4 d-inline" id="quantity" name="quantity" readonly>
