@@ -42,5 +42,5 @@ La idea del repositorio es practicar conceptos de backend con JavaScript mediant
 
 ## DEMO:
 
-![ProjectMid](https://user-images.githubusercontent.com/4382527/162600727-b782c1f1-37a7-4937-8058-dfd5eec740a5.gif)
+![ProjectSecond](https://user-images.githubusercontent.com/4382527/164957040-7c002d56-30bc-426e-adf7-d796da54dc3c.gif)
 
