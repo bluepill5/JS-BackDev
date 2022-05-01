@@ -44,3 +44,7 @@ La idea del repositorio es practicar conceptos de backend con JavaScript mediant
 
 ![ProjectSecond](https://user-images.githubusercontent.com/4382527/164957040-7c002d56-30bc-426e-adf7-d796da54dc3c.gif)
 
+## DEMO with Faker:
+![ProjectSecondFaker](https://user-images.githubusercontent.com/4382527/166128525-60ff93d0-a288-45b4-8668-a41b6c7afcc2.gif)
+
+
