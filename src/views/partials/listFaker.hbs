@@ -1,0 +1,20 @@
+<div class="list-products">
+    {{#each prods}}
+        <div class="container-product">
+
+            <div class="card h-50">
+                    
+                {{!-- {{#if product.thumbnail }} --}}
+                    <img src="{{ this.thumbnail }}" alt="Imagen del producto" class="img-card">
+                {{!-- {{/if}} --}}
+                    
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ this.title }} - ${{this.price}}</h5>
+                <p class="card-text">{{ this.description }}</p>
+                {{!-- <a href="/productos/{{ this._id }}" class="btn btn-primary btn-cover">Ver más</a> --}}
+            </div>
+        </div>
+    {{/each}}
+</div>
+

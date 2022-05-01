@@ -15,6 +15,7 @@ import Product from './controllers/Product.js';
 
 import router_cart from './routes/cart.routes.js';
 import router_products from './routes/product.routes.js';
+import ProductTestRouter from './routes/product-test.routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -127,6 +128,7 @@ app.get('/chat', (req, res) => {
 // Routers
 app.use('/productos', router_products);
 app.use('/carrito', router_cart);
+app.use('/productos-test', new ProductTestRouter());
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

@@ -26,6 +26,7 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.2.0",
     "eslint": "^8.13.0"
   }
 }
