@@ -1,0 +1,23 @@
+{{>nav}}
+
+{{#if session.logged}}
+  <div class="container-img">
+    <img src="./images/ouroboros.png" alt="Abraxas" width="333">
+  </div>
+  <header class="header">
+    <h1 class="home init">
+      Bienvenido {{ user }}, es un placer!!!!
+    </h1>
+  </header>
+{{ else }}
+  <div class="container-img">
+    <img src="./images/ouroboros.png" alt="Abraxas" width="333">
+  </div>
+  <header class="header">
+    <h1 class="home end">
+      Adiós {{ user }}, te esperamos pronto!!!
+    </h1>
+  </header>
+{{/if}}
+
+

@@ -2,6 +2,7 @@
 @import "./products.css";
 @import "./table.css";
 @import "./form.css";
+@import "./images.css";
 
 .container-img {
     display: flex;

@@ -48,12 +48,21 @@
                             <span class="badge badge-pill badge-secondary">{{session.cart.totalQty}}</span>
                         </a>
                     </li>
+                    {{#if session.logged}}
+                    <li class="navbar-item">
+                        <a href="/logout" class="nav-link">
+                            <span class="fas fa-sign-in-alt"></span>
+                            Logout
+                        </a>
+                    </li>
+                    {{ else }}
                     <li class="navbar-item">
                         <a href="/login" class="nav-link">
                             <span class="fas fa-user"></span>
                             Login
                         </a>
                     </li>
+                    {{/if}}
                     <li class="navbar-item">
                         <a href="" class="nav-link">
                             <span class="fas fa-user-plus"></span>
@@ -63,3 +72,6 @@
             </ul>
         </div>
 </nav>
+
+
+

@@ -17,6 +17,14 @@ body {
     padding-block-start: 1rem;
 }
 
+.home.init {
+    color: mediumseagreen;
+}
+
+.home.end {
+    color:crimson;
+}
+
 .header {
     padding-inline-start: 1rem;
     padding-block-start: .5rem;

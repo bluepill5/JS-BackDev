@@ -6,8 +6,9 @@ export default class UserRouter extends express.Router {
         super();
         this.userController = new UserController();
 
-        this.get('/', this.userController.getLogin);
-        this.post('/', this.userController.postLogin)
+        this.get('/login', this.userController.getLogin);
+        this.post('/login', this.userController.postLogin);
+        this.get('/logout', this.userController.getLogout);
     }
 }
 

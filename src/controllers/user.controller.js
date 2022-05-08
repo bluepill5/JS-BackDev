@@ -17,9 +17,25 @@ export default class UserController {
             const { username, password } = req.body;
             if(username === 'bluepill5' && password === '123456') {
                 req.session.logged = true;
-                res.render('welcome', {});
+                req.session.username = username;
+                
+                let user = username;
+                res.render('message', { user });
             } else  {
                 res.render('fail_login', {});            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getLogout(req, res) {
+        try {
+            req.session.logged = false;
+            let user = req.session.username;
+            // delete session & cookies
+            req.session.destroy();
+            res.clearCookie('connect.sid');
+            res.render('message', { user });
         } catch (error) {
             console.log(error);
         }

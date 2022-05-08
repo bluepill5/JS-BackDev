@@ -29,6 +29,7 @@ const __dirname = path.dirname(__filename);
 /*                              Servidor Express                              */
 /* -------------------------------------------------------------------------- */
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -58,7 +59,9 @@ app.use(session({
     }),
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { maxAge: 10000 },
+    rolling: true
 }));
 
 app.use(function(req, res, next) {
@@ -141,7 +144,7 @@ app.get('/chat', (req, res) => {
 app.use('/productos', router_products);
 app.use('/carrito', router_cart);
 app.use('/productos-test', new ProductTestRouter());
-app.use('/login', new UserRouter());
+app.use('/', new UserRouter());
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
