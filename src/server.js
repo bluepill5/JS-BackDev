@@ -21,6 +21,9 @@ import router_cart from './routes/cart.routes.js';
 import router_products from './routes/product.routes.js';
 import ProductTestRouter from './routes/product-test.routes.js';
 import UserRouter from './routes/user.routes.js';
+import AuthRouter from './routes/auth.routes.js'
+
+import passport from './utils/passport.utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -68,6 +71,10 @@ app.use(function(req, res, next) {
     res.locals.session = req.session;
     next();
  });
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 let products = new Product();
 /* ------------------------------- Websockets ------------------------------- */
@@ -145,6 +152,7 @@ app.use('/productos', router_products);
 app.use('/carrito', router_cart);
 app.use('/productos-test', new ProductTestRouter());
 app.use('/', new UserRouter());
+app.use('/', AuthRouter);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
