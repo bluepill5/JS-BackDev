@@ -9,9 +9,20 @@
   <h1 class="home end">
     Usuario o contraseña no válido!!!
   </h1>
+  <button class="btn btn-warning my-5" onclick="volver()">VOLVER</button>
 </header>
 
 
+<script>
+    function redireccionar(pagina) {
+        location.href = pagina;
+    } 
+
+    function volver() {
+        console.log('volver');
+        redireccionar('/')
+    }
+</script>
 
 
 

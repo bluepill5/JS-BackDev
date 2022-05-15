@@ -151,7 +151,7 @@ app.get('/chat', (req, res) => {
 app.use('/productos', router_products);
 app.use('/carrito', router_cart);
 app.use('/productos-test', new ProductTestRouter());
-app.use('/', new UserRouter());
+// app.use('/', new UserRouter());
 app.use('/', AuthRouter);
 
 const PORT = process.env.PORT || 3000;

@@ -1,18 +1,13 @@
-import path from 'path';
-
-
 /* -------------------------------------------------------------------------- */
 /*                                   signup                                   */
 /* -------------------------------------------------------------------------- */
 export function getSignUp(req, res) {
-    // res.sendFile(path.resolve() + '/src/views/signup.html');
     res.render('signup', {});
 }
 
 export function postSignup(req, res) {
     const user = req.user;
-    console.log(user);
-    res.sendFile(path.resolve() + '/src/views/login.html');
+    res.render('login', {});
 }
 
 export function failSignup(req, res) {
@@ -26,37 +21,38 @@ export function failSignup(req, res) {
 export function getLogin(req, res) {
     if(req.isAuthenticated()) {
         const user = req.user;
-        console.log('Usuario loggeado!!!');
-        res.render('login-ok', {
-            usuario: user.userName, 
-            nombre: user.firstName,
-            apellido: user.lastName,
-            email: user.email
+        res.render('message', {
+            user: user.userName
         });
     } else {
-        console.log('Usuario no loggeado!!!');
-        res.sendFile(path.resolve() + '/src/views/login.html');
+        res.render('login', {});
     }
 }
 
 export function postLogin(req, res) {
     const user = req.user;
-    console.log(user);
-    res.sendFile(path.resolve() + '/src/views/index.html');
+    req.session.logged = true;
+    req.session.username = user.userName;
+    res.render('message', {
+        user: user.userName
+    });
 }
 
 export function failLogin(req, res) {
-    console.log('Error en el login');
-    res.render('login-error', {});
+    res.render('fail_login', {});
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                   logout                                   */
 /* -------------------------------------------------------------------------- */
 export function logout(req, res) {
-    console.log('logout');
+    req.session.logged = false;
+    let user = req.session.username;
+    // delete session & cookies
+    req.session.destroy();
+    res.clearCookie('connect.sid');
     req.logout();
-    res.sendFile(path.resolve() + '/src/views/login.html');
+    res.render('message', { user });
 }
 
 
