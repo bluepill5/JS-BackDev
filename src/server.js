@@ -11,7 +11,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import mongoStore from 'connect-mongo';
 
-import auth from './middlewares/auth.middlewares.js';
+// import auth from './middlewares/auth.middlewares.js';
 
 import { engine } from 'express-handlebars';
 
@@ -20,7 +20,7 @@ import Product from './controllers/Product.js';
 import router_cart from './routes/cart.routes.js';
 import router_products from './routes/product.routes.js';
 import ProductTestRouter from './routes/product-test.routes.js';
-import UserRouter from './routes/user.routes.js';
+// import UserRouter from './routes/user.routes.js';
 import AuthRouter from './routes/auth.routes.js'
 
 import passport from './utils/passport.utils.js';

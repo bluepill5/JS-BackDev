@@ -12,7 +12,7 @@ router.get('/signup', AuthController.getSignUp);
 router.post('/signup', passport.authenticate('signup', {
     failureRedirect: '/failSignup'
 }), AuthController.postSignup);
-router.get('failSignup', AuthController.failSignup);
+router.get('/failSignup', AuthController.failSignup);
 
 /* -------------------------------------------------------------------------- */
 /*                                    login                                   */

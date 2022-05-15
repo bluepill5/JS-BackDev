@@ -11,7 +11,6 @@ export function postSignup(req, res) {
 }
 
 export function failSignup(req, res) {
-    console.log('Error en el registro');
     res.render('signup-error', {});
 }
 
@@ -33,7 +32,7 @@ export function postLogin(req, res) {
     const user = req.user;
     req.session.logged = true;
     req.session.username = user.userName;
-    res.render('message', {
+    res.render('index', {
         user: user.userName
     });
 }
