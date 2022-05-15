@@ -50,4 +50,8 @@ La idea del repositorio es practicar conceptos de backend con JavaScript mediant
 ## DEMO with session:
 ![Cookies](https://user-images.githubusercontent.com/4382527/167276998-dea3fad2-8a82-4cb8-8b17-93c3b63f70a4.gif)
 
+## DEMO with authentication:
+![Authentication](https://user-images.githubusercontent.com/4382527/168458053-778c5eaf-3971-400a-a249-84f0b04fa745.gif)
+
+
 

@@ -32,7 +32,7 @@ export function postLogin(req, res) {
     const user = req.user;
     req.session.logged = true;
     req.session.username = user.userName;
-    res.render('index', {
+    res.render('message', {
         user: user.userName
     });
 }
