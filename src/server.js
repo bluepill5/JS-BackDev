@@ -21,7 +21,9 @@ import router_cart from './routes/cart.routes.js';
 import router_products from './routes/product.routes.js';
 import ProductTestRouter from './routes/product-test.routes.js';
 // import UserRouter from './routes/user.routes.js';
-import AuthRouter from './routes/auth.routes.js'
+import AuthRouter from './routes/auth.routes.js';
+import InfoRouter from './routes/info.routes.js';
+import ForkRouter from './routes/fork.routes.js';
 
 import passport from './utils/passport.utils.js';
 
@@ -153,6 +155,8 @@ app.use('/carrito', router_cart);
 app.use('/productos-test', new ProductTestRouter());
 // app.use('/', new UserRouter());
 app.use('/', AuthRouter);
+app.use('/', InfoRouter);
+app.use('/', ForkRouter);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

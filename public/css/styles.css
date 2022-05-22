@@ -3,6 +3,7 @@
 @import "./table.css";
 @import "./form.css";
 @import "./images.css";
+@import "./info.css";
 
 .container-img {
     display: flex;
