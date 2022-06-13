@@ -2,6 +2,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import logger from "./logger.js";
+
 import * as http from "http";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -187,6 +189,12 @@ app.use("/productos-test", new ProductTestRouter());
 app.use("/", AuthRouter);
 app.use("/", InfoRouter);
 app.use("/", ForkRouter);
+
+/* ----------------------------- Invalid router ----------------------------- */
+app.use((req, res) => {
+  logger.warn('Ruta no definida');
+  res.send('Ruta no definida');
+});
 
 const { mode, port } = minimist(process.argv.slice(2), options);
 // const PORT = process.argv[2] || process.env.PORT || 3000;
