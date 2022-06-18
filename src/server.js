@@ -21,7 +21,7 @@ import Product from "./controllers/Product.js";
 
 import router_cart from "./routes/cart.routes.js";
 import router_products from "./routes/product.routes.js";
-import ProductTestRouter from "./routes/product-test.routes.js";
+// import ProductTestRouter from "./routes/product-test.routes.js";
 // import UserRouter from './routes/user.routes.js';
 import AuthRouter from "./routes/auth.routes.js";
 import InfoRouter from "./routes/info.routes.js";
@@ -184,7 +184,7 @@ const options = {
 // Routers
 app.use("/productos", router_products);
 app.use("/carrito", router_cart);
-app.use("/productos-test", new ProductTestRouter());
+// app.use("/productos-test", new ProductTestRouter());
 // app.use('/', new UserRouter());
 app.use("/", AuthRouter);
 app.use("/", InfoRouter);
