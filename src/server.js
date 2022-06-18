@@ -211,17 +211,17 @@ if (mode === 'cluster') {
       cluster.fork();
     });
   } else {
-    server.listen(port, () => {
+    server.listen(process.env.PORT || 3000, () => {
         console.log(
-          `🔥 Servidor escuchando con Express en puerto http://localhost:${port}`
+          `🔥 Servidor escuchando con Express en puerto http://localhost:${process.env.PORT || 3000}`
         );
       });
   }
 } else {
   console.log(`Mode: ${mode}`);
-  server.listen(port, () => {
+  server.listen(process.env.PORT || 3000, () => {
     console.log(
-      `🔥 Servidor escuchando con Express en puerto http://localhost:${port}`
+      `🔥 Servidor escuchando con Express en puerto http://localhost:${process.env.PORT || 3000}`
     );
   });
 }
