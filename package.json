@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect ./src/server.js",
+    "start": "node ./src/server.js",
+    "dev": "nodemon --inspect ./src/server.js",
     "prods": "nodemon --inspect ./src/database/createProductsMongo.js"
   },
   "keywords": [],
