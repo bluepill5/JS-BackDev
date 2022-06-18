@@ -10,6 +10,7 @@
     "dev": "nodemon --inspect ./src/server.js",
     "prods": "nodemon --inspect ./src/database/createProductsMongo.js"
   },
+  "homepage": "https://github.com/bluepill5/JS-BackDev",
   "keywords": [],
   "author": "",
   "license": "ISC",
